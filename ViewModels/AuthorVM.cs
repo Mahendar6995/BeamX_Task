@@ -5,6 +5,6 @@ namespace BeamX_Task.ViewModels
     public class AuthorVM
     {
         [Required(ErrorMessage ="Author Name cannot be Empty!!!")]
-        public string AuthorName { set; get; }
+        public string? AuthorName { set; get; }
     }
 }
