@@ -50,7 +50,7 @@ namespace BeamXTask.Migrations
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("Author");
+                    b.ToTable("Authors");
                 });
 
             modelBuilder.Entity("BeamX_Task.Models.Book", b =>
@@ -71,7 +71,7 @@ namespace BeamXTask.Migrations
 
                     b.HasKey("BookId");
 
-                    b.ToTable("Book");
+                    b.ToTable("Books");
                 });
 
             modelBuilder.Entity("AuthorBooks", b =>

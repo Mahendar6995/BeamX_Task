@@ -26,5 +26,8 @@ namespace BeamX_Task.Context
                 
             base.OnModelCreating(modelBuilder);
         }
+
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Book> Books { get; set;}
     }
 }
