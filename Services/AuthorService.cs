@@ -11,15 +11,20 @@ namespace BeamX_Task.Services
         {
             this.ctx = ctx;
         }
-        public void Delete(int id)
+        public string Delete(int id)
         {
             Author DeleteAuthor=GetAuthorById(id); 
 
             if(DeleteAuthor!=null)
             {
                 ctx.Authors.Remove(DeleteAuthor);
-                ctx.SaveChanges();
+                int rowsupdated= ctx.SaveChanges();
+                if(rowsupdated>0)
+                {
+                    return "Data Deleted Successfully!!!";
+                }
             }
+            return "Something went Wrong!!!";
         }
 
         public List<Author> GetAllAuthors()
@@ -34,16 +39,28 @@ namespace BeamX_Task.Services
             return author;
         }
 
-        public void Save(Author author)
+        public string Save(Author author)
         {
             ctx.Authors.Add(author);
-            ctx.SaveChanges();
+            int rowsupdated = ctx.SaveChanges();
+            if(rowsupdated>0)
+            {
+                return "Data Saved Successfully!!!";
+            }
+
+            return "Sometghing went Wrong!!!";
         }
 
-        public void Update(Author author)
+        public string Update(Author author)
         {
             ctx.Authors.Update(author);
-            ctx.SaveChanges();
+            int rowsupdated = ctx.SaveChanges();
+            if (rowsupdated > 0)
+            {
+                return "Data Updated Successfully!!!";
+            }
+
+            return "Sometghing went Wrong!!!";
         }
     }
 }

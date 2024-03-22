@@ -1,4 +1,6 @@
 using BeamX_Task.Context;
+using BeamX_Task.Services;
+using BeamX_Task.Services.ServiceBook;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,7 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MyDbContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnectionString")));
-
+builder.Services.AddScoped<IAuthor, AuthorService>();
+builder.Services.AddScoped<IBook, BookService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,6 +29,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Author}/{action=Index}/{id?}");
 
 app.Run();

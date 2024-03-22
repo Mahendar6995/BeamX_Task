@@ -4,10 +4,10 @@ namespace BeamX_Task.Services
 {
     public interface IAuthor
     {
-        public void Save(Author author);
-        public void Delete(int id);
+        public string Save(Author author);
+        public string Delete(int id);
         public Author GetAuthorById(int id);
-        public void Update(Author author);
+        public string Update(Author author);
         public List<Author> GetAllAuthors();
 
     }
