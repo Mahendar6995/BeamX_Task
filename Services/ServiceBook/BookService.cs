@@ -11,15 +11,21 @@ namespace BeamX_Task.Services.ServiceBook
         {
             this.ctx = ctx;
         }
-        public void Delete(int id)
+        public string Delete(int id)
         {
             Book deletebook=GetBookById(id);    
             if(deletebook!=null)
             {
                 ctx.Books.Remove(deletebook);
-                ctx.SaveChanges();
+                int rowsupdated = ctx.SaveChanges();
+                if (rowsupdated > 0)
+                {
+                    return "Data Saved Successfully!!!";
+                }
             }
-            
+            return "Something went Wrong!!!";
+
+
         }
 
         public List<Book> GetAllBooks()
@@ -34,15 +40,29 @@ namespace BeamX_Task.Services.ServiceBook
             return book;
         }
 
-        public void Save(Book book)
+        public string Save(Book book,int AuthorId)
         {
-
+            Author author = ctx.Authors.Where(val=>val.AuthorId==AuthorId).FirstOrDefault();
+            book.Authors = new List<Author>();
+            book.Authors.Add(author);
+            ctx.Books.Add(book);
+            int rowsupdated=ctx.SaveChanges();
+            if(rowsupdated>0)
+            {
+                return "Data Saved Successfully!!!";
+            }
+            return "Something went Wrong!!!";
         }
 
-        public void Update(Book book)
+        public string Update(Book book)
         {
             ctx.Books.Add(book);
-            ctx.SaveChanges();
+            int rowsupdated=ctx.SaveChanges();
+            if (rowsupdated > 0)
+            {
+                return "Data Updated Successfully!!!";
+            }
+            return "Something went Wrong!!!";
         }
     }
 }

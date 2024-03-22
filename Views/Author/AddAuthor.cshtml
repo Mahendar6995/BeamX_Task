@@ -9,13 +9,14 @@
                 @Html.LabelFor(val => val.AuthorName)
                 @Html.TextBoxFor(val => val.AuthorName)
             </div>
+
             <input type="submit" value="Save" class="btn btn-secondary"></input>
     }
 
     @if(TempData["Message"]!=null)
     {
-           <script>
-               alert("@TempData["Message"]");
-           </script>
+        <script>
+            alert("@TempData["Message"]");
+        </script>
     }
 }

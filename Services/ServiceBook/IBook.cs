@@ -4,11 +4,11 @@ namespace BeamX_Task.Services.ServiceBook
 {
     public interface IBook
     {
-        public void Save(Book book);
-        public void Delete(int id);
+        public string Save(Book book,int AuthorId);
+        public string Delete(int id);
 
         public Book GetBookById(int id);
         public List<Book> GetAllBooks();
-        public void Update(Book book);
+        public string Update(Book book);
     }
 }
