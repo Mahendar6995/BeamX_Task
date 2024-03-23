@@ -12,22 +12,23 @@ namespace BeamX_Task.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Author>()
-                .HasMany(s => s.Books)
-                .WithMany(s => s.Authors)
-                .UsingEntity<Dictionary<string, object>>("AuthorBooks",
-                ab => ab.HasOne<Book>().WithMany().HasForeignKey("BookId"),
-                ab => ab.HasOne<Author>().WithMany().HasForeignKey("AuthorId"),
-                ab =>
-                {
-                    ab.HasKey("AuthorId", "BookId");
-                    ab.ToTable("AuthorBooks");
-                });
+            modelBuilder.Entity<BookAuthor>()
+                .HasOne(b => b.Book)
+                .WithMany(ba => ba.BookAuthors)
+                .HasForeignKey(b => b.BookId);
+
+            modelBuilder.Entity<BookAuthor>()
+                .HasOne(b => b.Author)
+                .WithMany(ba => ba.BookAuthors)
+                .HasForeignKey(a => a.AuthorId);
+
                 
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Author> Authors { get; set; }
         public DbSet<Book> Books { get; set;}
+
+        public DbSet<BookAuthor> BooksAuthors { get; set; }
     }
 }

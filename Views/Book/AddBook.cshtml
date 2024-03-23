@@ -1,4 +1,4 @@
-﻿@model Book
+﻿@* @model Book
 @{
     <h1>Add Book</h1>
     @using(Html.BeginForm("AddBook","Book",FormMethod.Post))
@@ -25,6 +25,7 @@
             
         </div>
         <input type="submit" value="Save" class=" btn btn-secondary">
+        @Html.ActionLink("Show","ShowBookDetails","Book");
     }
 
     @if (TempData["Message"] != null)
@@ -34,3 +35,4 @@
         </script>
     }
 }
+ *@

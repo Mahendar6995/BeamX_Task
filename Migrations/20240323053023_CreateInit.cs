@@ -5,7 +5,7 @@
 namespace BeamXTask.Migrations
 {
     /// <inheritdoc />
-    public partial class createinit : Migration
+    public partial class CreateInit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,23 +38,25 @@ namespace BeamXTask.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AuthorBooks",
+                name: "BooksAuthors",
                 columns: table => new
                 {
-                    AuthorId = table.Column<int>(type: "int", nullable: false),
-                    BookId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BookId = table.Column<int>(type: "int", nullable: false),
+                    AuthorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AuthorBooks", x => new { x.AuthorId, x.BookId });
+                    table.PrimaryKey("PK_BooksAuthors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AuthorBooks_Authors_AuthorId",
+                        name: "FK_BooksAuthors_Authors_AuthorId",
                         column: x => x.AuthorId,
                         principalTable: "Authors",
                         principalColumn: "AuthorId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AuthorBooks_Books_BookId",
+                        name: "FK_BooksAuthors_Books_BookId",
                         column: x => x.BookId,
                         principalTable: "Books",
                         principalColumn: "BookId",
@@ -62,8 +64,13 @@ namespace BeamXTask.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AuthorBooks_BookId",
-                table: "AuthorBooks",
+                name: "IX_BooksAuthors_AuthorId",
+                table: "BooksAuthors",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BooksAuthors_BookId",
+                table: "BooksAuthors",
                 column: "BookId");
         }
 
@@ -71,7 +78,7 @@ namespace BeamXTask.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AuthorBooks");
+                name: "BooksAuthors");
 
             migrationBuilder.DropTable(
                 name: "Authors");

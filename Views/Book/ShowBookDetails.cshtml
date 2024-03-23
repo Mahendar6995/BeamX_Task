@@ -1,0 +1,19 @@
+﻿@using BeamX_Task.ViewModels;
+
+@{
+    <table class="table table-hover">
+        <tr>
+            <th>AuthorName</th>
+            <th>Title</th>
+            <th>Description</th>
+        </tr>
+        @foreach (BookAuthorVm authorbook in ViewBag.BookAuthorsList)
+        {
+            <tr>
+                <td>@authorbook.AuthorName</td>
+                <td>@authorbook.Title</td>
+                <td>@authorbook.Description</td>
+            </tr>
+        }
+    </table>
+}

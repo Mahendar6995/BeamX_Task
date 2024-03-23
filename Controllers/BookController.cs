@@ -2,6 +2,7 @@
 using BeamX_Task.Services;
 using BeamX_Task.Services.ServiceBook;
 using BeamX_Task.ViewModels;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeamX_Task.Controllers
@@ -36,5 +37,30 @@ namespace BeamX_Task.Controllers
             TempData["Message"]=bookservice.Save(newBook,AuthorId);
             return RedirectToAction("AddBook");
         }
+
+        [HttpGet]
+        public IActionResult ShowBookDetails()
+        {
+            List<BookAuthorVm> bookAuthorVms = bookservice.GetBooksWithAuthor();
+
+            ViewBag.BookAuthorsList = bookAuthorVms.ToList();
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            Book book=bookservice.GetBookById(id);
+            return View(book);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Book book)
+        {
+            TempData["Message"] = bookservice.Update(book);
+            return RedirectToAction();
+
+        }
+
     }
 }

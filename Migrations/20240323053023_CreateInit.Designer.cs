@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeamXTask.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240322110601_createinit")]
-    partial class createinit
+    [Migration("20240323053023_CreateInit")]
+    partial class CreateInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,21 +23,6 @@ namespace BeamXTask.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("AuthorBooks", b =>
-                {
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AuthorId", "BookId");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("AuthorBooks", (string)null);
-                });
 
             modelBuilder.Entity("BeamX_Task.Models.Author", b =>
                 {
@@ -77,19 +62,56 @@ namespace BeamXTask.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("AuthorBooks", b =>
+            modelBuilder.Entity("BeamX_Task.Models.BookAuthor", b =>
                 {
-                    b.HasOne("BeamX_Task.Models.Author", null)
-                        .WithMany()
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("BooksAuthors");
+                });
+
+            modelBuilder.Entity("BeamX_Task.Models.BookAuthor", b =>
+                {
+                    b.HasOne("BeamX_Task.Models.Author", "Author")
+                        .WithMany("BookAuthors")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BeamX_Task.Models.Book", null)
-                        .WithMany()
+                    b.HasOne("BeamX_Task.Models.Book", "Book")
+                        .WithMany("BookAuthors")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Book");
+                });
+
+            modelBuilder.Entity("BeamX_Task.Models.Author", b =>
+                {
+                    b.Navigation("BookAuthors");
+                });
+
+            modelBuilder.Entity("BeamX_Task.Models.Book", b =>
+                {
+                    b.Navigation("BookAuthors");
                 });
 #pragma warning restore 612, 618
         }

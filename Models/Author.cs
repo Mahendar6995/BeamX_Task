@@ -8,6 +8,6 @@
 
         // Navigation Property
 
-        public ICollection<Book> Books { set; get; }
+        public ICollection<BookAuthor> BookAuthors { set; get; }
     }
 }
