@@ -12,6 +12,5 @@ namespace BeamX_Task.Services.ServiceBook
         public List<Book> GetAllBooks();
         public string Update(Book book);
 
-        public List<BookAuthorVm> GetBooksWithAuthor();
     }
 }

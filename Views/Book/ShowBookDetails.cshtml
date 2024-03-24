@@ -6,14 +6,25 @@
             <th>AuthorName</th>
             <th>Title</th>
             <th>Description</th>
+            <th>Action</th>
         </tr>
-        @foreach (BookAuthorVm authorbook in ViewBag.BookAuthorsList)
+        @foreach (Book book in ViewBag.BookAuthorsList)
         {
             <tr>
-                <td>@authorbook.AuthorName</td>
-                <td>@authorbook.Title</td>
-                <td>@authorbook.Description</td>
+                <td>@string.Join(", ", book.BookAuthors.Select(val => val.Author.AuthorName))</td>
+                <td>@book.Title</td>
+                <td>@book.Description</td>
+                <td>@Html.ActionLink("Edit","Edit","Book",new{id=book.BookId}) ||
+                    @Html.ActionLink("Delete", "Delete", "Book", new { id = book.BookId })
+                </td>
             </tr>
         }
     </table>
+
+    @if (TempData["Message"] != null)
+    {
+        <script>
+            alert("@TempData["Message"]");
+        </script>
+    }
 }

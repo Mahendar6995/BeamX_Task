@@ -1,4 +1,7 @@
-﻿@* @model Book
+﻿@model Book
+@{
+    ViewBag.Title = "Add Book";
+}
 @{
     <h1>Add Book</h1>
     @using(Html.BeginForm("AddBook","Book",FormMethod.Post))
@@ -14,18 +17,15 @@
             @Html.ValidationMessageFor(val => val.Description)
         </div>
 
+
         <div class="form-group">
-           @Html.LabelFor(val=>val.Authors)
-           <select class="form-select-sm" name="AuthorId">
-                @foreach (Author author in ViewBag.AuthorsList)
-                {
-                    <option value="@author.AuthorId">@author.AuthorName</option>   
-                }
-            </select>
-            
+            @Html.LabelFor(model => model.BookAuthors)
+            @Html.DropDownList("AuthorId", (List<SelectListItem>)ViewBag.AuthorsList, "Select Author", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BookAuthors, "", new { @class = "text-danger" })
         </div>
-        <input type="submit" value="Save" class=" btn btn-secondary">
-        @Html.ActionLink("Show","ShowBookDetails","Book");
+        <input type="submit" value="Save" class=" btn btn-secondary"><br>
+        @Html.ActionLink("Show","ShowBookDetails","Book");<br>
+        @Html.ActionLink("Back to Main Page","Index","Author");
     }
 
     @if (TempData["Message"] != null)
@@ -35,4 +35,3 @@
         </script>
     }
 }
- *@

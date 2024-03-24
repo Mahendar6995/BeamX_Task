@@ -4,6 +4,7 @@ using BeamX_Task.Services.ServiceBook;
 using BeamX_Task.ViewModels;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BeamX_Task.Controllers
 {
@@ -24,7 +25,13 @@ namespace BeamX_Task.Controllers
         [HttpGet]
         public IActionResult AddBook()
         {
-            ViewBag.AuthorsList = authorservice.GetAllAuthors();
+            List<Author> authors = authorservice.GetAllAuthors();
+            List<SelectListItem> selectlist=authors.Select(a=>new SelectListItem
+            {
+                Value=a.AuthorId.ToString(),
+                Text=a.AuthorName
+            }).ToList();
+            ViewBag.AuthorsList = selectlist;
             return View();
         }
 
@@ -41,9 +48,8 @@ namespace BeamX_Task.Controllers
         [HttpGet]
         public IActionResult ShowBookDetails()
         {
-            List<BookAuthorVm> bookAuthorVms = bookservice.GetBooksWithAuthor();
-
-            ViewBag.BookAuthorsList = bookAuthorVms.ToList();
+            List<Book> books = bookservice.GetAllBooks();
+            ViewBag.BookAuthorsList = books.ToList();
             return View();
         }
 
@@ -60,6 +66,12 @@ namespace BeamX_Task.Controllers
             TempData["Message"] = bookservice.Update(book);
             return RedirectToAction();
 
+        }
+        [HttpGet]
+        public IActionResult Delete(int id) 
+        {
+            TempData["Message"] = bookservice.Delete(id);
+            return RedirectToAction("ShowBookDetails");
         }
 
     }
