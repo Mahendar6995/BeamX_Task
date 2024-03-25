@@ -61,7 +61,6 @@ namespace BeamX_Task.Services.ServiceBook
                     }
                 };
             }
-            //book.BookAuthors.Add(new Models.BookAuthor() { Author=author});
             ctx.Books.Add(book);
             int rowsupdated=ctx.SaveChanges();
             if(rowsupdated>0)
@@ -71,15 +70,48 @@ namespace BeamX_Task.Services.ServiceBook
             return "Something went Wrong!!!";
         }
 
-        public string Update(Book updatedbook)
+        public string Update(Book updatedbook, int AuthorId)
         {
-            ctx.Books.Add(updatedbook);
-            int rowsupdated=ctx.SaveChanges();
-            if (rowsupdated > 0)
+            // get the existing book from database
+            Book existingbook = ctx.Books.Include(val => val.BookAuthors).Where(val => val.BookId == updatedbook.BookId).FirstOrDefault();
+            if(existingbook!=null)
             {
-                return "Data Updated Successfully!!!";
+                existingbook.Title=updatedbook.Title;
+                existingbook.Description=updatedbook.Description;
+                existingbook.BookAuthors.Clear();
+                // get author from db
+
+                Author author = ctx.Authors.Where(val => val.AuthorId == AuthorId).FirstOrDefault();
+                if(author!=null)
+                {
+                    BookAuthor bookAuthor = new BookAuthor
+                    {
+                        AuthorId = author.AuthorId,
+                        Author = author,
+                        BookId = updatedbook.BookId,
+                        Book = updatedbook
+
+                    };
+                    existingbook.BookAuthors.Add(bookAuthor);
+                }
+                int rowsupdated=ctx.SaveChanges();  
+                if(rowsupdated>0)
+                {
+                    return "Data Updated Successfully!!!";
+                }
+                else
+                {
+                    return "Something went wrong!!!";
+                }
             }
-            return "Something went Wrong!!!";
+            else
+            {
+                return "Book no Found";
+            }
         }
     }
 }
+
+
+
+

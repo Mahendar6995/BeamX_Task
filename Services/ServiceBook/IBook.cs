@@ -10,7 +10,7 @@ namespace BeamX_Task.Services.ServiceBook
 
         public Book GetBookById(int id);
         public List<Book> GetAllBooks();
-        public string Update(Book book);
+        public string Update(Book book,int id);
 
     }
 }

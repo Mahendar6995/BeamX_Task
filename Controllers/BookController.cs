@@ -56,17 +56,19 @@ namespace BeamX_Task.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            Book book=bookservice.GetBookById(id);
+            Book book = bookservice.GetBookById(id);
+            ViewBag.AuthorsList = authorservice.GetAllAuthors();
             return View(book);
         }
+        
 
         [HttpPost]
-        public IActionResult Edit(Book book)
+        public IActionResult Edit(Book book,int AuthorId)
         {
-            TempData["Message"] = bookservice.Update(book);
-            return RedirectToAction();
-
+            TempData["Message"] = bookservice.Update(book,AuthorId);
+            return RedirectToAction("ShowBookDetails");
         }
+
         [HttpGet]
         public IActionResult Delete(int id) 
         {

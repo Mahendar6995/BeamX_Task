@@ -1,30 +1,30 @@
-﻿@* @model Book
+﻿@model Book
 @{
-   @using(Html.BeginForm("Edit","Book",FormMethod.Post))
-   {
-       @Html.HiddenFor(val=>val.BookId);
-       <div class="form-group">
-           @Html.LabelFor(val=>val.Title)
-           @Html.TextBoxFor(val=>val.Title)
-           @Html.ValidationMessageFor(val=>val.Title)
-       </div>
+    using (Html.BeginForm("Edit", "Book", FormMethod.Post))
+    {
+        @Html.HiddenFor(model => model.BookId)
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title)
+            @Html.TextBoxFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
 
         <div class="form-group">
-            @Html.LabelFor(val => val.Description)
-            @Html.TextBoxFor(val => val.Description)
-            @Html.ValidationMessageFor(val => val.Description)
+            @Html.LabelFor(model => model.Description)
+            @Html.TextBoxFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
         </div>
+
         <div class="form-group">
-            @Html.LabelFor(val => val.Authors)
-            <select class="form-select-sm" name="AuthorId">
+            @Html.Label("Author Name")
+            <select name="AuthorId">
                 @foreach (Author author in ViewBag.AuthorsList)
                 {
-                    <option value="@author.AuthorId">@author.AuthorName</option>
+                    <option value=@author.AuthorId >@author.AuthorName</option>
                 }
             </select>
-
         </div>
-        <input type="submit" value="Update" class="btn btn-secondary"></input>
-   }
+
+        <input type="submit" value="Update" class="btn btn-secondary" />
+    }
 }
- *@
