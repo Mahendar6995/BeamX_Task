@@ -61,7 +61,6 @@ namespace BeamX_Task.Controllers
             return View(book);
         }
         
-
         [HttpPost]
         public IActionResult Edit(Book book,int AuthorId)
         {
@@ -74,6 +73,13 @@ namespace BeamX_Task.Controllers
         {
             TempData["Message"] = bookservice.Delete(id);
             return RedirectToAction("ShowBookDetails");
+        }
+
+        [HttpGet]
+        public IActionResult GetAllBooks() 
+        {
+            ViewBag.Books = bookservice.GetAllBooks();  
+            return View();
         }
 
     }

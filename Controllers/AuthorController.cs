@@ -36,5 +36,13 @@ namespace BeamX_Task.Controllers
             }
             return RedirectToAction("AddAuthor");
         }
+
+        [HttpGet]
+        public ActionResult GetAllAuthors()
+        {
+            List<Author> authors=authorservice.GetAllAuthors();
+            ViewBag.Authors = authors;
+            return View();
+        }
     }
 }
