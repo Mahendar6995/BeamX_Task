@@ -60,21 +60,27 @@ namespace BeamX_Task.Controllers
         public IActionResult Edit(int id)
         {
             Book book = bookservice.GetBookById(id);
+            BookVM bookVM = new BookVM();
+            bookVM.Title = book.Title;
+            bookVM.Description = book.Description;
             ViewBag.AuthorsList = authorservice.GetAllAuthors();
-            return View(book);
+            return View(bookVM);
         }
         
         [HttpPost]
-        public IActionResult Edit(Book book,int AuthorId)
+        public IActionResult Edit(BookVM bookVM)
         {
+            ViewBag.AuthorsList = authorservice.GetAllAuthors();
             if (ModelState.IsValid)
             {
-
-                TempData["Message"] = bookservice.Update(book, AuthorId);
+                int AuthorId=bookVM.AuthorId;
+                Book updatebook=new Book();
+                updatebook.Title = bookVM.Title;
+                updatebook.Description = bookVM.Description;
+                TempData["Message"] = bookservice.Update(updatebook, AuthorId);
                 return RedirectToAction("ShowBookDetails");
             }
-            else return RedirectToAction("Edit");
-
+            else return View("Edit",bookVM);
         }
 
         [HttpGet]

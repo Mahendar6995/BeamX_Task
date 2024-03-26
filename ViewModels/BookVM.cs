@@ -5,6 +5,8 @@ namespace BeamX_Task.ViewModels
 {
     public class BookVM
     {
+        public int BookId { set; get;}
+
         [Required(ErrorMessage ="Title cannot be empty!!!")]
         [MinLength(5)]
         public string? Title { get; set; }
