@@ -12,6 +12,8 @@ namespace BeamX_Task.ViewModels
         [MinLength(5)]
         public string? Description { get; set; }
 
+        public int AuthorId { set; get; }
+
         // Navigation property
         public ICollection<BookAuthorVM> BookAuthors { get; set; }
     }

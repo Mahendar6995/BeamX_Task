@@ -28,9 +28,12 @@
         <div class="form-group">
             @Html.Label("Author Name")
             <select name="AuthorId" ,class = "form-control" >
-                @foreach (Author author in ViewBag.AuthorsList)
+                @if(@ViewBag.AuthorsList!=null)
                 {
-                    <option value=@author.AuthorId>@author.AuthorName</option>
+                    @foreach (Author author in ViewBag.AuthorsList)
+                    {
+                        <option value=@author.AuthorId>@author.AuthorName</option>
+                    }
                 }
             </select>
         </div>

@@ -26,29 +26,26 @@ namespace BeamX_Task.Controllers
         public IActionResult AddBook()
         {
             List<Author> authors = authorservice.GetAllAuthors();
-            //List<SelectListItem> selectlist=authors.Select(a=>new SelectListItem
-            //{
-            //    Value=a.AuthorId.ToString(),
-            //    Text=a.AuthorName
-            //}).ToList();
             ViewBag.AuthorsList = authors;
             return View();
         }
 
         [HttpPost]
-        public IActionResult AddBook(BookVM bookVM,int AuthorId)
+        public IActionResult AddBook(BookVM bookVM)
         {
             Book newBook;
+            List<Author> authors = authorservice.GetAllAuthors();
+            ViewBag.AuthorsList = authors;
             if (ModelState.IsValid)
             {
                 newBook= new Book();
                 newBook.Title = bookVM.Title;
                 newBook.Description = bookVM.Description;
+                int AuthorId = bookVM.AuthorId;
                 TempData["Message"] = bookservice.Save(newBook, AuthorId);
                 return RedirectToAction("AddBook");
             }
-            return View("AddBook",AuthorId);
-           
+            return View("AddBook",bookVM);
         }
 
         [HttpGet]
