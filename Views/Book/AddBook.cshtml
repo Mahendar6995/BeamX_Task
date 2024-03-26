@@ -1,4 +1,5 @@
-﻿@model Book
+﻿@using BeamX_Task.ViewModels;
+@model BookVM
 @{
     ViewBag.Title = "Add Book";
 }
@@ -18,10 +19,20 @@
         </div>
 
 
+        // <div class="form-group">
+        //     @Html.LabelFor(model => model.BookAuthors)
+        //     @Html.DropDownList("AuthorId", (List<SelectListItem>)ViewBag.AuthorsList, "Select Author", new { @class = "form-control" })
+        //     @Html.ValidationMessageFor(model => model.BookAuthors, "", new { @class = "text-danger" })
+        // </div>
+
         <div class="form-group">
-            @Html.LabelFor(model => model.BookAuthors)
-            @Html.DropDownList("AuthorId", (List<SelectListItem>)ViewBag.AuthorsList, "Select Author", new { @class = "form-control" })
-            @Html.ValidationMessageFor(model => model.BookAuthors, "", new { @class = "text-danger" })
+            @Html.Label("Author Name")
+            <select name="AuthorId" ,class = "form-control" >
+                @foreach (Author author in ViewBag.AuthorsList)
+                {
+                    <option value=@author.AuthorId>@author.AuthorName</option>
+                }
+            </select>
         </div>
         <input type="submit" value="Save" class=" btn btn-secondary"><br>
         @Html.ActionLink("Show","ShowBookDetails","Book");<br>

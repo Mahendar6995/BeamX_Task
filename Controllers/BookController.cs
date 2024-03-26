@@ -26,23 +26,29 @@ namespace BeamX_Task.Controllers
         public IActionResult AddBook()
         {
             List<Author> authors = authorservice.GetAllAuthors();
-            List<SelectListItem> selectlist=authors.Select(a=>new SelectListItem
-            {
-                Value=a.AuthorId.ToString(),
-                Text=a.AuthorName
-            }).ToList();
-            ViewBag.AuthorsList = selectlist;
+            //List<SelectListItem> selectlist=authors.Select(a=>new SelectListItem
+            //{
+            //    Value=a.AuthorId.ToString(),
+            //    Text=a.AuthorName
+            //}).ToList();
+            ViewBag.AuthorsList = authors;
             return View();
         }
 
         [HttpPost]
         public IActionResult AddBook(BookVM bookVM,int AuthorId)
         {
-            Book newBook = new Book();
-            newBook.Title = bookVM.Title;
-            newBook.Description = bookVM.Description;
-            TempData["Message"]=bookservice.Save(newBook,AuthorId);
-            return RedirectToAction("AddBook");
+            Book newBook;
+            if (ModelState.IsValid)
+            {
+                newBook= new Book();
+                newBook.Title = bookVM.Title;
+                newBook.Description = bookVM.Description;
+                TempData["Message"] = bookservice.Save(newBook, AuthorId);
+                return RedirectToAction("AddBook");
+            }
+            return View("AddBook",AuthorId);
+           
         }
 
         [HttpGet]
@@ -64,8 +70,14 @@ namespace BeamX_Task.Controllers
         [HttpPost]
         public IActionResult Edit(Book book,int AuthorId)
         {
-            TempData["Message"] = bookservice.Update(book,AuthorId);
-            return RedirectToAction("ShowBookDetails");
+            if (ModelState.IsValid)
+            {
+
+                TempData["Message"] = bookservice.Update(book, AuthorId);
+                return RedirectToAction("ShowBookDetails");
+            }
+            else return RedirectToAction("Edit");
+
         }
 
         [HttpGet]

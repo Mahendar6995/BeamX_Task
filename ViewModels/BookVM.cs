@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BeamX_Task.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace BeamX_Task.ViewModels
 {
@@ -10,5 +11,8 @@ namespace BeamX_Task.ViewModels
         [Required (ErrorMessage ="Description cannot be empty!!!")]
         [MinLength(5)]
         public string? Description { get; set; }
+
+        // Navigation property
+        public ICollection<BookAuthorVM> BookAuthors { get; set; }
     }
 }
