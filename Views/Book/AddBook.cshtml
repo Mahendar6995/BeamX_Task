@@ -18,13 +18,6 @@
             @Html.ValidationMessageFor(val => val.Description)
         </div>
 
-
-        // <div class="form-group">
-        //     @Html.LabelFor(model => model.BookAuthors)
-        //     @Html.DropDownList("AuthorId", (List<SelectListItem>)ViewBag.AuthorsList, "Select Author", new { @class = "form-control" })
-        //     @Html.ValidationMessageFor(model => model.BookAuthors, "", new { @class = "text-danger" })
-        // </div>
-
         <div class="form-group">
             @Html.Label("Author Name")
             <select name="AuthorId" ,class = "form-control" >

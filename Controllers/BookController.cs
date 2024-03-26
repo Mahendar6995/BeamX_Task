@@ -27,7 +27,8 @@ namespace BeamX_Task.Controllers
         {
             List<Author> authors = authorservice.GetAllAuthors();
             ViewBag.AuthorsList = authors;
-            return View();
+            BookVM bookVM = new BookVM();
+            return View(bookVM);
         }
 
         [HttpPost]
